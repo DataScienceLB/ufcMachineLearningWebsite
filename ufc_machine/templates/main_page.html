@@ -1,0 +1,232 @@
+{% extends "base_template.html" %}
+
+{% block title %} Main Page {% endblock %}
+
+{% block scripts_ %}
+
+{% endblock %}
+
+{% block main %}
+
+    <form class="w-auto" action="/" method="POST">
+
+        <div class="row ml-0 mr-0">
+
+            <div class="col-sm-4 col-md-4 col-lg-5 mx-auto" id="redcorner">
+                <h1 class="text-danger text-center">Red Corner</h1>
+                <input type="text" autocomplete="off"
+                       class="form-control text-danger mx-auto text-center" id="fighter1" name="fighter1"
+                       placeholder="Example: Conor Mcgregor">
+            </div>
+
+            <div class="col-sm-4 col-md-4 col-lg-2 text-center mx-auto" id="submit">
+                <button type="submit" class="btn btn-outline-danger mt-3" style="width: 176px" id="fight">Fight!
+                </button>
+            </div>
+
+            <div class="col-sm-4 col-md-4 col-lg-5 mx-auto" id="blueperson">
+                <h1 class="text-info text-center">Blue Corner</h1>
+                <input type="text" autocomplete="off" class="form-control text-info mx-auto text-center"
+                       id="fighter2" name="fighter2" placeholder="Example: Khabib Nurmagomedov">
+            </div>
+
+        </div>
+
+    </form>
+
+    {% if not_found %}
+        <h6 class="text-danger text-center"> The person that you searched for is not in our database, check your
+            spelling and try again.</h6>
+        <h6 class="text-danger text-center"> Note that fighters in our database are mostly ones that are currently
+            active.</h6>
+    {% endif %}
+    {% if red %}
+
+        <div class="container-fluid mt-5">
+
+            <div class="row">
+
+                <div class="col-sm-3 col-md-4 col-lg-4">
+                    <h1 class="text-center text-danger">{{ red_name }}</h1>
+                    <h1 class="text-center text-danger">{{ red }}%</h1>
+
+                    <div id="myDiv" class="mx-auto font-weight-bold"></div>
+
+                    <script>
+                        const data = [{
+                            y: ["Str Acc", "Str Abs", "Strike Def", "Avg Tkdwn", "Tkdwn Acc", "Tkdwn Def", "Submission", "SLPM"],
+                            x: [{{ rstrike_accuracy }}, {{ rstrikes_absorbed_per_minute }}, {{ rstrike_defense }}, {{ ravg_takedownds_p_15_mins }}, {{ rtakedown_accuracy }}, {{ rtakedown_defense }}, {{ rsubmision_avg }}, {{ rstrikes_landed_per_minute }}],
+                            type: 'bar',
+                            orientation: 'h',
+                            autorange: "reversed",
+                            showgrid: false,
+                            marker: {
+                                color: 'rgb(255,0,0)',
+                                opacity: 0.6,
+                                line: {
+                                    color: 'rgb(8,48,107)',
+                                    width: 1.5
+                                }
+                            }
+                        }];
+                        const rlayout = {
+                            xaxis: {
+                                showticklabels: false,
+                                showgrid: false,
+                                showline: false,
+                                zeroline: false
+                            },
+                            yaxis: {
+                                showline: false,
+                                showgrid: false,
+                            }
+                        };
+
+                        Plotly.newPlot('myDiv', data, rlayout, {showSendToCloud: true});
+                    </script>
+
+                </div>
+
+                <div class="col-sm-6 col-md-4 col-lg-4 text-center font-weight-bold" id='tale'>
+
+                    <h1 class="text-warning text-center">Tale Of The Tape</h1>
+
+                    <div class="row">
+                        <div class="col-sm text-white bg-danger " style="border:1px solid #DC143C">{{ red_name }}</div>
+                        <div class="col-sm">Name</div>
+                        <div class="col-sm text-white bg-info" style="border:1px solid #00BFFF">{{ blue_name }}</div>
+                    </div>
+                    <br>
+
+                    <div class="row">
+                        <div class="col-sm text-white bg-danger"
+                             style="border:1px solid #DC143C">{{ r_weight_class }}</div>
+                        <div class="col-sm">Weight Class</div>
+                        <div class="col-sm text-white bg-info"
+                             style="border:1px solid #00BFFF">{{ b_weight_class }}</div>
+                    </div>
+                    <br>
+
+                    <div class="row">
+                        <div class="col-sm text-white bg-danger" style="border:1px solid #DC143C">{{ r_age }}</div>
+                        <div class="col-sm">Age</div>
+                        <div class="col-sm text-white bg-info" style="border:1px solid #00BFFF">{{ b_age }}</div>
+                    </div>
+                    <br>
+
+                    <div class="row">
+                        <div class="col-sm text-white bg-danger" style="border:1px solid #DC143C">{{ r_height }}</div>
+                        <div class="col-sm">Height</div>
+                        <div class="col-sm text-white bg-info" style="border:1px solid #00BFFF">{{ b_height }}</div>
+                    </div>
+                    <br>
+
+                    <div class="row">
+                        <div class="col-sm text-white bg-danger" style="border:1px solid #DC143C">{{ r_weight }}</div>
+                        <div class="col-sm">Weight (lbs)</div>
+                        <div class="col-sm text-white bg-info" style="border:1px solid #00BFFF">{{ b_weight }}</div>
+                    </div>
+                    <br>
+
+                    <div class="row">
+                        <div class="col-sm text-white bg-danger" style="border:1px solid #DC143C">{{ r_reach }}</div>
+                        <div class="col-sm">Reach (in)</div>
+                        <div class="col-sm text-white bg-info" style="border:1px solid #00BFFF">{{ b_reach }}</div>
+                    </div>
+                    <br>
+
+                    <div class="row">
+                        <div class="col-sm text-white bg-danger" style="border:1px solid #DC143C">{{ r_wins }}</div>
+                        <div class="col-sm">Wins</div>
+                        <div class="col-sm text-white bg-info" style="border:1px solid #00BFFF">{{ b_wins }}</div>
+                    </div>
+                    <br>
+
+                    <div class="row">
+                        <div class="col-sm text-white bg-danger" style="border:1px solid #DC143C">{{ r_losses }}</div>
+                        <div class="col-sm">Losses</div>
+                        <div class="col-sm text-white bg-info" style="border:1px solid #00BFFF">{{ b_losses }}</div>
+                    </div>
+                    <br>
+
+                    <div class="row">
+                        <div class="col-sm text-white bg-danger" style="border:1px solid #DC143C">{{ r_draws }}</div>
+                        <div class="col-sm">Draws</div>
+                        <div class="col-sm text-white bg-info" style="border:1px solid #00BFFF">{{ b_draws }}</div>
+                    </div>
+                    <br>
+
+                </div>
+
+                <div class="col-sm-3 col-md-4 col-lg-4 ">
+                    <h1 class="text-center text-info">{{ blue_name }}</h1>
+                    <h1 class="text-center text-info">{{ blue }}%</h1>
+                    <div id="BlueDiv" class="mx-auto font-weight-bold"></div>
+
+                    <script>
+                        const bdata = [{
+                            y: ["Str Acc", "Str Abs", "Strike Def", "Avg Tkdwn", "Tkdwn Acc", "Tkdwn Def", "Submission", "SLPM"],
+                            x: [{{ bstrike_accuracy }}, {{ bstrikes_absorbed_per_minute }}, {{ bstrike_defense }}, {{ bavg_takedownds_p_15_mins }}, {{ btakedown_accuracy }}, {{ btakedown_defense }}, {{ bsubmision_avg }}, {{ bstrikes_landed_per_minute }}],
+                            type: 'bar',
+                            orientation: 'h',
+                            autorange: "reversed",
+                            marker: {
+                                color: "#00909e",
+                                opacity: 0.4,
+                                line: {
+                                    color: 'rgb(8,48,107)',
+                                    width: 1.5
+                                }
+                            }
+                        }];
+                        const blayout = {
+                            xaxis: {
+                                autorange: 'reversed',
+                                showticklabels: false,
+                                showgrid: false,
+                                showline: false,
+                                zeroline: false
+                            },
+                            yaxis: {
+                                side: 'right',
+                                showline: false,
+                                showgrid: false,
+                            }
+                        };
+                        Plotly.newPlot('BlueDiv', bdata, blayout, {showSendToCloud: true});
+                    </script>
+                    <div class="row text-center small mx-auto ">
+                        <p>SLpM - Significant Strikes Landed per Minute</p>
+                        <p>Sub. Avg. - Average Submissions Attempted per 15 minutes</p>
+                        <p>TD Avg. - Average Takedowns Landed per 15 minutes</p>
+                        <p>TD Acc. - Takedown Accuracy</p>
+                        <p>Str. Def. - Significant Strike Defence (the % of opponents strikes that did not land)</p>
+                        <p>TD Def. - Takedown Defense (the % of opponents TD attempts that did not land)</p>
+                        <p>SApM - Significant Strikes Absorbed per Minute</p>
+                        <p>Str. Acc. - Significant Striking Accuracy</p>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+        {% if red > blue %}
+            <div class="col-sm-12 col-md-4 col-lg-4 mx-auto text-center p-3 mb-2 text-danger font-weight-bold"
+                 id="winner"><h2>The winner is {{ red_name }}!</h2>
+            </div>
+
+        {% endif %}
+
+        {% if blue > red %}
+            <div class="col-sm-12 col-md-4 col-lg-4 mx-auto text-center p-3 mb-2 text-info font-weight-bold"
+                 id="winner"><h2>The winner is {{ blue_name }}!</h2></div>
+{#            <div class="col-sm-12 col-md-4 col-lg-4 mx-auto text-center p-3 mb-2 text-info font-weight-bold"#}
+{#                 style="border:3px solid #00BFFF" id="winner"><h2>The winner is {{ blue_name }}!</h2></div>#}
+
+        {% endif %}
+
+    {% endif %}
+
+{% endblock %}

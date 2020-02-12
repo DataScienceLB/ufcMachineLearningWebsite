@@ -1,0 +1,19 @@
+body {
+  background-image: url("../img/ufc_image.png");
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-color: white;
+}
+
+.main-svg {
+    background: transparent !important;
+}
+
+@media only screen and (max-width: 576px)
+{
+  .svg-container
+  {
+   /*height: 350px !important;*/
+   width: fit-content !important;
+  }
+}
